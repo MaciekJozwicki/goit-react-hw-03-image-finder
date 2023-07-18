@@ -1,4 +1,4 @@
-const { Component } = require('react');
+import { Component } from 'react';
 
 class Modal extends Component {
   render() {

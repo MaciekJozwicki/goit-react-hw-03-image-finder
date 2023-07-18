@@ -1,20 +1,44 @@
-const { Component } = require('react');
+import { Component } from 'react';
+import axios from 'axios';
 
 class SearchBar extends Component {
   state = {
     phrase: '',
+    search: [],
   };
 
-  handleInputChange = e => {
-    const { value } = e.target;
-    this.setState({ phrase: value });
+  getData = async () => {
+    const images = await axios
+      .get(
+        `
+    https://pixabay.com/api/?q=${this.state.phrase}&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12`
+      )
+      .then(res => {
+        this.props.searchRes(res.data.hits);
+        this.setState({
+          search: (this.state.search = [res.data.hits]),
+        });
+        localStorage.setItem('dataA', JSON.stringify(this.state.search));
+      });
+    console.log(this.state.search);
+  };
+
+  handleSearch = e => {
+    const { phrase } = this.state;
+    this.setState({ phrase: e.target.value });
+    console.log(phrase);
   };
 
   search = e => {
     e.preventDefault();
-    this.props.phrase = this.state.phrase;
-    this.props.onSearch();
+    this.getData();
+    console.log(this.state.search);
+    if (this.state.search) {
+      console.log(this.state.search);
+      this.props.searchRes(this.state.search);
+    }
   };
+
   render() {
     return (
       <header className="searchbar">
@@ -24,7 +48,8 @@ class SearchBar extends Component {
           </button>
 
           <input
-            onChange={this.handleInputChange}
+            onChange={this.handleSearch}
+            value={this.state.phrase}
             className="input"
             type="text"
             autoComplete="off"
