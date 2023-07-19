@@ -7,20 +7,29 @@ class SearchBar extends Component {
     search: [],
   };
 
+  // getData = async () => {
+  //   const images = await axios
+  //     .get(
+  //       `
+  //   https://pixabay.com/api/?q=${this.state.phrase}&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12`
+  //     )
+  //     .then(res => {
+  //       this.props.searchRes(res.data.hits);
+  //       this.setState({
+  //         search: (this.state.search = [res.data.hits]),
+  //       });
+  //       localStorage.setItem('dataA', JSON.stringify(this.state.search));
+  //     });
+  //   console.log(this.state.search);
+  // };
+
   getData = async () => {
-    const images = await axios
-      .get(
-        `
-    https://pixabay.com/api/?q=${this.state.phrase}&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12`
-      )
-      .then(res => {
-        this.props.searchRes(res.data.hits);
-        this.setState({
-          search: (this.state.search = [res.data.hits]),
-        });
-        localStorage.setItem('dataA', JSON.stringify(this.state.search));
-      });
-    console.log(this.state.search);
+    const res = await axios.get(
+      `?q=${this.state.phrase}&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12`
+    );
+    this.setState({ search: (this.state.search = res.data.hits) });
+    this.props.searchRes(this.state.search, this.state.phrase);
+    localStorage.setItem('dataA', JSON.stringify(this.state.search));
   };
 
   handleSearch = e => {
