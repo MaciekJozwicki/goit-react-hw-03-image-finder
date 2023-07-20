@@ -4,9 +4,6 @@ import SearchBar from './elements/SearchBar';
 import axios from 'axios';
 import Button from './elements/Button';
 
-const API_URL =
-  'https://pixabay.com/api/?key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12';
-
 class App extends Component {
   state = {
     searchRes: [],

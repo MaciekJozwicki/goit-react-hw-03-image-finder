@@ -16,7 +16,7 @@ class ImageGalleryItem extends Component {
         this.setState({ onePhoto: (this.state.onePhoto = [res.data.hits]) });
       });
     this.props.onePhoto(this.state.onePhoto);
-    this.props.abc();
+    // this.props.abc();
   };
 
   render() {

@@ -26,13 +26,11 @@ class ImageGallery extends Component {
   // }
 
   async componentDidMount() {
-    this.setState({ isLoading: true });
     const res = await axios.get(
       `?q=${this.props.searchQuery}&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12`
     );
     this.setState({
       data: (this.state.data = res.data.hits),
-      isLoading: false,
     });
   }
 
@@ -49,42 +47,30 @@ class ImageGallery extends Component {
   };
   render() {
     return (
-      // <ul className="gallery">
-      //   {this.props.result.length > 0
-      //     ? this.props.result.map(image => {
-      //         return <ImageGalleryItem img={image.webformatURL} />;
-      //       })
-      //     : this.state.data.map(image => {
-      //         return <ImageGalleryItem img={image.webformatURL} />;
-      //       })}
-      // </ul>
       <ul className="imageGallery">
-        {this.state.isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          this.props.result.map(image => {
-            return (
-              <ImageGalleryItem
-                abc={this.props.photoModal(this.state.onePhoto)}
-                onClick={this.props.photoModal(this.state.onePhoto)}
-                img={image.webformatURL}
-                id={image.id}
-                onePhoto={this.handleOnePhoto}
-              />
-            );
-          })
-        )}
-        {this.props.newImages.length > 0
+        {this.props.result.map(image => {
+          return (
+            <ImageGalleryItem
+              // abc={this.props.photoModal(this.state.onePhoto)}
+              // onClick={this.props.photoModal(this.state.onePhoto)}
+              img={image.webformatURL}
+              id={image.id}
+              onePhoto={this.handleOnePhoto}
+            />
+          );
+        })}
+
+        {/* {this.props.newImages.length > 0
           ? this.props.newImages.map(image => (
               <ImageGalleryItem
-                abc={this.props.photoModal(this.state.onePhoto)}
-                onClick={this.props.photoModal(this.state.onePhoto)}
+                // abc={this.props.photoModal(this.state.onePhoto)}
+                // onClick={this.props.photoModal(this.state.onePhoto)}
                 img={image.webformatURL}
                 id={image.id}
                 onePhoto={this.handleOnePhoto}
               />
             ))
-          : null}
+          : null} */}
       </ul>
     );
   }

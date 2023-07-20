@@ -27,9 +27,11 @@ class SearchBar extends Component {
     const res = await axios.get(
       `?q=${this.state.phrase}&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12`
     );
+    console.log('res', res.data.hits.length);
     this.setState({ search: (this.state.search = res.data.hits) });
     this.props.searchRes(this.state.search, this.state.phrase);
     localStorage.setItem('dataA', JSON.stringify(this.state.search));
+    console.log('hej', this.state.search);
   };
 
   handleSearch = e => {
