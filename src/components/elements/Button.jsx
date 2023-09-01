@@ -19,12 +19,15 @@ class Button extends Component {
         this.setState({ page: this.state.page + 1 });
         this.props.load(this.state.items);
       });
-    console.log(this.state.items, this.state.items2);
+    console.log('a', this.state.items, 'b', this.state.items2);
   };
 
-  // componentDidUpdate() {
-  //   console.log(this.props.phrase);
-  // }
+  componentDidUpdate() {
+    this.setState({
+      items: this.state.items,
+    });
+    console.log("I'm updated");
+  }
 
   render() {
     return (

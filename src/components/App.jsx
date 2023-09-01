@@ -1,43 +1,204 @@
 import { Component } from 'react';
-import ImageGallery from './elements/ImageGallery';
-import SearchBar from './elements/SearchBar';
-import axios from 'axios';
-import Button from './elements/Button';
+import fetchImages from './services/api';
+import Button from './Button/Button';
+import SearchBar from './SearchBar/SearchBar';
+import ImageGallery from './ImageGallery/ImageGallery';
+import Modal from './Modal/Modal';
+import Loader from './Loader/Loader';
 
 class App extends Component {
   state = {
-    searchRes: [],
-    phrase: '',
-    newImages: [],
-    photoModal: [],
+    photos: [],
+    searchValue: '',
+    page: 1,
+    error: null,
+    isLoading: false,
+    modal: '',
   };
 
-  handleChangeRes = (array, phrase) => {
-    this.setState({
-      searchRes: array,
-      phrase: phrase,
-    });
-    console.log('array', array, 'phrase', phrase);
+  async componentDidUpdate(prevState, prevProps) {
+    if (
+      this.state.searchValue !== prevProps.searchValue ||
+      this.state.page !== prevProps.page
+    ) {
+      try {
+        this.setState({ isLoading: true });
+
+        const photos = await fetchImages(
+          this.state.searchValue,
+          this.state.page
+        );
+
+        photos.map(photo => {
+          return this.setState(prevState => ({
+            photos: [
+              ...prevState.photos,
+              {
+                id: photo.id,
+                webformatURL: photo.webformatURL,
+                largeImageURL: photo.largeImageURL,
+                tags: photo.tags,
+              },
+            ],
+          }));
+        });
+      } catch (error) {
+        this.setState({ error });
+        console.log(this.state.error);
+      } finally {
+        this.setState({ isLoading: false });
+      }
+    }
+  }
+
+  searchValue = e => {
+    this.setState({ photos: [], searchValue: e });
+    console.log(e);
   };
-  handleLoadMore = array => {
-    this.setState({ newImages: (this.state.newImages = array) });
-    console.log(this.state.newImages);
+
+  showPhotos = () => {
+    const { photos } = this.state;
+    return photos;
   };
-  handleModal = photo => {
-    this.setState({ photoModal: (this.state.photoModal = photo) });
+
+  handleButtonVisibility = () => {
+    if (this.state.photos.length < 12) return 'none';
   };
+
+  loadMore = e => {
+    if (e) {
+      this.setState({ page: this.state.page + 1 });
+
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        });
+      }, 500);
+    }
+  };
+
+  handleModal = imageAddress => this.setState({ modal: imageAddress });
+
+  modalClose = e => this.setState({ modal: e });
+
+  passImgToModal = () => this.state.modal;
+
   render() {
     return (
       <div className="App">
-        <SearchBar searchRes={this.handleChangeRes}></SearchBar>
+        <SearchBar onSubmit={this.searchValue} />
         <ImageGallery
-          result={this.state.searchRes}
-          newImages={this.state.newImages}
-          photoModal={this.handleModal}
-        ></ImageGallery>
-        <Button phrase={this.state.phrase} load={this.handleLoadMore} />
+          photos={this.showPhotos()}
+          imageAddress={this.handleModal}
+        />
+        {this.state.isLoading && <Loader />}
+        <div
+          className="ButtonContainer"
+          style={{ display: this.handleButtonVisibility() }}
+        >
+          {!this.state.isLoading && <Button onClick={this.loadMore} />}
+        </div>
+        {this.state.modal !== '' && (
+          <Modal
+            imageAddress={this.passImgToModal()}
+            onClick={this.modalClose}
+          />
+        )}
       </div>
     );
   }
 }
 export default App;
+// class App extends Component {
+//   state = {
+//     images: [],
+//     searchValue: '',
+//     page: 1,
+//     isLoading: false,
+//     error: null,
+//     modal: '',
+//   };
+
+//   async componentDidUpdate(prevState, prevProps) {
+//     if (
+//       this.state.searchValue !== prevProps.searchValue ||
+//       this.state.page !== prevProps.page
+//     ) {
+//       try {
+//         this.setState({ isLoading: true });
+
+//         const photos = await fetchImages(
+//           this.state.searchValue,
+//           this.state.page
+//         );
+
+//         photos.map(photo => {
+//           return this.setState(prevState => ({
+//             photos: [
+//               ...prevState.photos,
+//               {
+//                 id: photo.id,
+//                 webformatURL: photo.webformatURL,
+//                 largeImageURL: photo.largeImageURL,
+//                 tags: photo.tags,
+//               },
+//             ],
+//           }));
+//         });
+//       } catch (error) {
+//         this.setState({ error });
+//         console.log(this.state.error);
+//       } finally {
+//         this.setState({ isLoading: false });
+//       }
+//     }
+//   }
+
+//   searchValue = e => this.setState({ images: [], searchValue: e });
+
+//   showImages = () => {
+//     return this.state.images;
+//   };
+
+//   loadMore = e => {
+//     if (e) {
+//       this.setState({ page: this.state.page + 1 });
+//     }
+//   };
+
+//   handleModal = imageURL => {
+//     this.setState({ modal: imageURL });
+//   };
+
+//   modalClose = e => {
+//     this.setState({ modal: e });
+//   };
+
+//   passImageToModal = () => {
+//     return this.state.modal;
+//   };
+
+//   render() {
+//     return (
+//       <div className="App">
+//         <SearchBar onSubmit={this.searchValue}></SearchBar>
+//         <ImageGallery
+//           photos={this.showImages}
+//           imageAddress={this.handleModal}
+//         />
+//         {this.state.isLoading && <Loader />}
+//         <div className="ButtonContainer">
+//           {!this.state.isLoading && <Button onClick={this.loadMore} />}
+//         </div>
+//         {this.state.modal !== '' && (
+//           <Modal
+//             imageAddress={this.passImageToModal}
+//             onClick={this.modalClose}
+//           />
+//         )}
+//       </div>
+//     );
+//   }
+// }
+// export default App;
