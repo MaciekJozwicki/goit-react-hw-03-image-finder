@@ -2,20 +2,16 @@ import css from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
 
 const ImageGalleryItem = props => {
-  const { id, webformatURL, largeImageURL, tags, imageAddress } = props;
+  const { id, img, alt, onePhoto, largeItem } = props;
 
   return (
     <li
       className={css.ImageGalleryItem}
       key={id}
       value={id}
-      onClick={() => imageAddress(largeImageURL)}
+      onClick={() => onePhoto(largeItem)}
     >
-      <img
-        className={css.ImageGalleryItemImage}
-        src={webformatURL}
-        alt={tags}
-      />
+      <img className={css.ImageGalleryItemImage} src={img} alt={alt} />
     </li>
   );
 };

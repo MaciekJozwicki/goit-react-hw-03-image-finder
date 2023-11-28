@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class Modal extends Component {
   modalClose = e => {
     if (e.key === 'Escape' || e.type === 'click') {
-      this.props.onClick('');
+      this.props.onClick();
     }
   };
 

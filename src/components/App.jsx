@@ -89,7 +89,7 @@ class App extends Component {
       <div className="App">
         <SearchBar onSubmit={this.searchValue} />
         <ImageGallery
-          photos={this.showPhotos()}
+          // photos={this.showPhotos()}
           imageAddress={this.handleModal}
         />
         {this.state.isLoading && <Loader />}
@@ -99,12 +99,7 @@ class App extends Component {
         >
           {!this.state.isLoading && <Button onClick={this.loadMore} />}
         </div>
-        {this.state.modal !== '' && (
-          <Modal
-            imageAddress={this.passImgToModal()}
-            onClick={this.modalClose}
-          />
-        )}
+        
       </div>
     );
   }
