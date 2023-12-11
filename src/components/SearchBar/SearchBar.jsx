@@ -17,6 +17,7 @@ class Searchbar extends Component {
   onSubmit = e => {
     e.preventDefault();
     this.props.handleSearchValueChange(this.state.inputValue);
+    this.props.removeItemsFromArray();
   };
 
   render() {

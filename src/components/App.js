@@ -25,6 +25,12 @@ class App extends Component {
     });
   };
 
+  removeItemsFromArray = () => {
+    this.setState({
+      images: [],
+    });
+  }; 
+
   async componentDidUpdate(prevProps, prevState) {
     if (
       this.state.searchValue !== prevState.searchValue ||
@@ -51,7 +57,10 @@ class App extends Component {
   render() {
     return (
       <>
-        <Searchbar handleSearchValueChange={this.handleSearchValueChange} />
+        <Searchbar
+          handleSearchValueChange={this.handleSearchValueChange}
+          removeItemsFromArray={this.removeItemsFromArray}
+        />
         {this.state.isLoading && <Loader />}
         <ImageGallery images={this.state.images} />
         {!this.state.images ||
