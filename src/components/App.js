@@ -1,14 +1,14 @@
-import { Component } from "react";
-import "./App.css";
-import Searchbar from "./components/Searchbar/Searchbar";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import fetchImages from "./services/fetchImages";
-import Loader from "./components/Loader/Loader";
-import Button from "./components/Button/Button";
+import { Component } from 'react';
+import './App.css';
+import SearchBar from './Searchbar/Searchbar';
+import ImageGallery from './ImageGallery/ImageGallery';
+import fetchImages from './services/fetchImages';
+import Loader from './Loader/Loader';
+import Button from './Button/Button';
 
 class App extends Component {
   state = {
-    searchValue: "",
+    searchValue: '',
     images: [],
     isLoading: false,
     page: 1,
@@ -52,7 +52,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <Searchbar handleSearchValueChange={this.handleSearchValueChange} />
+        <SearchBar handleSearchValueChange={this.handleSearchValueChange} />
         {this.state.isLoading && <Loader />}
         <ImageGallery images={this.state.images} />
         {!this.state.images ||
