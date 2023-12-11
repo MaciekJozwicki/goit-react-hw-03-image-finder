@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styles from "./ImageGalleryItem.module.css";
 
-export class ImageGalleryItem extends Component {
+class ImageGalleryItem extends Component {
   handleModalOpen = () => {
     this.props.handleModalImage(this.props.image);
     this.props.handleIsModalOpenChange();

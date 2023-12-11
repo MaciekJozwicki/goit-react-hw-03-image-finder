@@ -4,7 +4,7 @@ import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 import Modal from "../Modal/Modal";
 import styles from "./ImageGallery.module.css";
 
-export class ImageGallery extends Component {
+class ImageGallery extends Component {
   state = {
     imageObject: {},
     isModalOpen: false,

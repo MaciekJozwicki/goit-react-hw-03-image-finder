@@ -41,7 +41,7 @@ img {
   height: auto;
 }
 
-.App {
+/* .App {
   display: flex;
   flex-direction: column;
 }
@@ -82,4 +82,4 @@ img {
 .LoaderPosition {
   display: flex;
   justify-content: center;
-}
+} */

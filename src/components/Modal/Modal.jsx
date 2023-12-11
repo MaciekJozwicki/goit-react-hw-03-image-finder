@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styles from "./Modal.module.css";
 
-export class Modal extends Component {
+class Modal extends Component {
   render() {
     const { url, alt } = this.props.imageObject;
     return (

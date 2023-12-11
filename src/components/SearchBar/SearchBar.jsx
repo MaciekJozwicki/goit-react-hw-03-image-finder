@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import styles from "./Searchbar.module.css";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styles from './Searchbar.module.css';
 
-export class Searchbar extends Component {
+class Searchbar extends Component {
   state = {
-    inputValue: "",
+    inputValue: '',
   };
 
   handleInputChange = e => {
@@ -24,16 +24,16 @@ export class Searchbar extends Component {
       <div className={styles.searchbar}>
         <header>
           <form onSubmit={this.onSubmit}>
-            <button type='submit' className={styles.button}>
-              <span className='button-label'>Search</span>
+            <button type="submit" className={styles.button}>
+              <span className="button-label">Search</span>
             </button>
 
             <input
               className={styles.input}
-              type='text'
-              autoComplete='off'
+              type="text"
+              autoComplete="off"
               autoFocus
-              placeholder='Search images and photos'
+              placeholder="Search images and photos"
               onChange={this.handleInputChange}
             />
           </form>

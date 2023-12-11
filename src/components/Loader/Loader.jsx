@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Circles } from "react-loader-spinner";
 
-export class Loader extends Component {
+class Loader extends Component {
   render() {
     return (
       <Circles
