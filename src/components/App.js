@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import SearchBar from './Searchbar/Searchbar';
+import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import fetchImages from './services/fetchImages';
 import Loader from './Loader/Loader';
@@ -51,7 +51,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <SearchBar handleSearchValueChange={this.handleSearchValueChange} />
+        <Searchbar handleSearchValueChange={this.handleSearchValueChange} />
         {this.state.isLoading && <Loader />}
         <ImageGallery images={this.state.images} />
         {!this.state.images ||
