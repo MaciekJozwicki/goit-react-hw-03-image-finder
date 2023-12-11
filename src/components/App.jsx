@@ -88,10 +88,7 @@ class App extends Component {
     return (
       <div className="App">
         <SearchBar onSubmit={this.searchValue} />
-        <ImageGallery
-          // photos={this.showPhotos()}
-          imageAddress={this.handleModal}
-        />
+        <ImageGallery className="Gallery" imageAddress={this.handleModal} />
         {this.state.isLoading && <Loader />}
         <div
           className="ButtonContainer"
@@ -99,7 +96,6 @@ class App extends Component {
         >
           {!this.state.isLoading && <Button onClick={this.loadMore} />}
         </div>
-        
       </div>
     );
   }

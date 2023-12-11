@@ -1,21 +1,19 @@
-import { Component } from 'react';
-import css from './Button.module.css';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import styles from "./Button.module.css";
 
-class Button extends Component {
-  handleClick = e => this.props.onClick(e);
-
+export class Button extends Component {
   render() {
     return (
-      <button type="button" onClick={this.handleClick} className={css.Button}>
-        Load more!
+      <button
+        className={styles.loadMore}
+        onClick={this.props.handleIncrementPage}>
+        Load more
       </button>
     );
   }
 }
-
 Button.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  handleIncrementPage: PropTypes.func,
 };
-
 export default Button;

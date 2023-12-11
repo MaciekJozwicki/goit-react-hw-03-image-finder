@@ -1,78 +1,73 @@
-import { Component } from 'react';
-import axios from 'axios';
-import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
-import Modal from '../Modal/Modal';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
+import Modal from "../Modal/Modal";
+import styles from "./ImageGallery.module.css";
 
-axios.defaults.baseURL = 'https://pixabay.com/api/';
-// const API_KEY =
-//   'https://pixabay.com/api/?q=dog&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12';
-
-class ImageGallery extends Component {
+export class ImageGallery extends Component {
   state = {
-    images: [],
-    data: [],
-    isLoading: false,
-    onePhoto: '',
+    imageObject: {},
+    isModalOpen: false,
   };
 
-  // getData = async () => {
-  //   const images = await axios.get(API_KEY).then(res => {
-  //     this.setState({ images: (this.state.images = [res.data.hits]) });
-  //   });
-  // };
+  handleModalImage = image => {
+    const imageObject = {
+      url: image.largeImageURL,
+      alt: image.tags,
+    };
 
-  // async componentDidMount() {
-  //   await this.getData();
-  //   this.setState({ data: (this.state.data = this.state.images[0]) });
-  // }
-
-  async componentDidMount() {
-    const res = await axios.get(
-      `https://pixabay.com/api/?q=dog&page=1&key=36318494-588897fc86ad50d359fa41850&image_type=photo&orientation=horizontal&per_page=12'`
-    );
-    console.log(res);
     this.setState({
-      data: (this.state.data = res.data.hits),
+      imageObject: imageObject,
     });
-  }
+  };
+
+  handleIsModalOpenChange = () => {
+    this.setState(prevState => ({
+      isModalOpen: !prevState.isModalOpen,
+    }));
+  };
+
+  closeModal = e => {
+    if (e.key !== "Escape") {
+      this.setState({
+        isModalOpen: false,
+      });
+    }
+  };
 
   componentDidUpdate() {
-    console.log(this.state.onePhoto);
+    console.log(this.state.imageObject);
   }
-
-  handleOnePhoto = photo => {
-    console.log(photo);
-    this.setState({ onePhoto: photo });
-    console.log(this.state.onePhoto);
-  };
 
   render() {
     return (
       <>
-        <ul className="imageGallery">
-          {this.state.data.map(image => {
+        <ul className={styles.gallery}>
+          {this.props.images?.map(image => {
             return (
               <ImageGalleryItem
-                img={image.webformatURL}
-                id={image.id}
-                alt={image.tags}
-                largeItem={image.largeImageURL}
-                onePhoto={this.handleOnePhoto}
+                key={image.id}
+                image={image}
+                handleModalImage={this.handleModalImage}
+                handleIsModalOpenChange={this.handleIsModalOpenChange}
               />
             );
           })}
         </ul>
-        {this.state.onePhoto.length > 0 && (
+        {this.state.isModalOpen && (
           <Modal
-            imageAddress={this.state.onePhoto}
-            onClick={e => {
-              // e.stopPropagation();
-              this.setState({ onePhoto: '' });
-            }}
+            handleIsModalOpenChange={this.handleIsModalOpenChange}
+            imageObject={this.state.imageObject}
+            isModalOpen={this.state.isModalOpen}
           />
         )}
       </>
     );
   }
 }
+
+ImageGallery.propTypes = {
+  images: PropTypes.array,
+};
+
 export default ImageGallery;
