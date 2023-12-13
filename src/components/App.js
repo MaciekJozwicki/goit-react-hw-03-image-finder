@@ -29,7 +29,7 @@ class App extends Component {
     this.setState({
       images: [],
     });
-  }; 
+  };
 
   async componentDidUpdate(prevProps, prevState) {
     if (
