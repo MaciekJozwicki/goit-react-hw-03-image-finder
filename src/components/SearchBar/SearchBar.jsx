@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Searchbar.module.css';
+import styles from './SearchBar.module.css';
 
 class Searchbar extends Component {
   state = {

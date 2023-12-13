@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Searchbar from './Searchbar/Searchbar';
+import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import fetchImages from './services/fetchImages';
 import Loader from './Loader/Loader';
@@ -57,7 +57,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <Searchbar
+        <SearchBar
           handleSearchValueChange={this.handleSearchValueChange}
           removeItemsFromArray={this.removeItemsFromArray}
         />
