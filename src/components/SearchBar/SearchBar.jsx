@@ -11,7 +11,6 @@ class Searchbar extends Component {
     this.setState({
       inputValue: e.target.value,
     });
-    // console.log(this.state.inputValue);
   };
 
   onSubmit = e => {
