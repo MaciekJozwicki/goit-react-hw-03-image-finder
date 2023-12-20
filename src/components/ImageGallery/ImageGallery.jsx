@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
-import Modal from "../Modal/Modal";
-import styles from "./ImageGallery.module.css";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+import Modal from '../Modal/Modal';
+import styles from './ImageGallery.module.css';
 
 class ImageGallery extends Component {
   state = {
@@ -27,17 +27,11 @@ class ImageGallery extends Component {
     }));
   };
 
-  closeModal = e => {
-    if (e.key !== "Escape") {
-      this.setState({
-        isModalOpen: false,
-      });
-    }
+  closeModal = () => {
+    this.setState({
+      isModalOpen: false,
+    });
   };
-
-  componentDidUpdate() {
-    console.log(this.state.imageObject);
-  }
 
   render() {
     return (
@@ -59,6 +53,7 @@ class ImageGallery extends Component {
             handleIsModalOpenChange={this.handleIsModalOpenChange}
             imageObject={this.state.imageObject}
             isModalOpen={this.state.isModalOpen}
+            closeModal={this.closeModal}
           />
         )}
       </>
